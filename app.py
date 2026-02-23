@@ -62,9 +62,8 @@ nap_duration = timedelta(minutes=duracion_siesta_min)
 current_time = datetime.combine(datetime.today(), hora_despertar)
 schedule = []
 
-# Despertar
 schedule.append({
-    "Actividad": "☀️ Despertar",
+    "Actividad": "Despertar",
     "Hora": current_time.strftime("%I:%M %p"),
     "Rango": f"{(current_time - timedelta(minutes=30)).strftime('%I:%M %p')} - {(current_time + timedelta(minutes=30)).strftime('%I:%M %p')}"
 })
@@ -73,19 +72,18 @@ for i in range(num_siestas):
     nap_start = current_time + wake_window
     nap_end = nap_start + nap_duration
     schedule.append({
-        "Actividad": f"😴 Siesta {i+1}",
+        "Actividad": f"Siesta {i+1}",
         "Hora": f"{nap_start.strftime('%I:%M %p')} - {nap_end.strftime('%I:%M %p')}",
         "Rango": f"{(nap_start - timedelta(minutes=30)).strftime('%I:%M %p')} - {(nap_end + timedelta(minutes=30)).strftime('%I:%M %p')}"
     })
     current_time = nap_end
 
-# Hora de dormir
 bedtime = current_time + timedelta(minutes=int(info["wake_min"] * 0.75))
 if bedtime.hour > 21:
     bedtime = bedtime - timedelta(minutes=60)
 
 schedule.append({
-    "Actividad": "🌙 Hora de dormir sugerida",
+    "Actividad": "Hora de dormir sugerida",
     "Hora": bedtime.strftime("%I:%M %p"),
     "Rango": f"{(bedtime - timedelta(minutes=30)).strftime('%I:%M %p')} - {(bedtime + timedelta(minutes=30)).strftime('%I:%M %p')}"
 })
@@ -107,14 +105,14 @@ st.markdown(f"""
 st.info(f"**Señales de sueño para tu bebé ({edad}):** {info['cues']}")
 st.caption("💡 Recuerda: siempre observa las señales de TU bebé. Esto es una guía aproximada ±30 min.")
 
-# Función PDF
+# Función PDF 100% corregida
 def create_pdf():
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
     
     pdf.set_font("Arial", "B", 18)
-    pdf.set_text_color(107, 78, 126)  # lavanda
+    pdf.set_text_color(107, 78, 126)
     pdf.cell(0, 12, "Calculadora Instantanea del Sueno de tu Bebe", ln=1, align="C")
     pdf.ln(8)
     
@@ -124,11 +122,7 @@ def create_pdf():
     
     pdf.set_font("Arial", "", 11)
     for row in schedule:
-        # Limpiamos emojis para que nunca falle
-        act = row['Actividad'].replace("☀️", "").replace("😴", "").replace("🌙", "").strip()
-        if act == "": 
-            act = "Hora de dormir sugerida"
-        pdf.cell(0, 8, f"{act}: {row['Hora']}   ({row['Rango']})", ln=1)
+        pdf.cell(0, 8, f"{row['Actividad']}: {row['Hora']}   ({row['Rango']})", ln=1)
     
     pdf.ln(10)
     pdf.set_font("Arial", "B", 12)
@@ -139,7 +133,7 @@ def create_pdf():
     
     return pdf.output(dest="S").encode("latin-1")
 
-# Botón de descarga
+# Botón descarga
 if st.button("📥 Descargar mi horario en PDF", type="primary", use_container_width=True):
     pdf_bytes = create_pdf()
     st.download_button(
