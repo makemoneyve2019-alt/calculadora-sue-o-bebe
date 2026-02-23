@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime, timedelta
-from fpdf2 import FPDF
+from fpdf import FPDF          # ←←← CORREGIDO (paquete fpdf)
 import pandas as pd
 
 # Configuración de página
@@ -14,7 +14,7 @@ st.set_page_config(
 # Estilos calmantes
 st.markdown("""
 <style>
-    .stApp { background-color: #2C3E50; }
+    .stApp { background-color: #F8F1E9; }
     .title { color: #6B4E7E; font-size: 2.3rem; font-weight: bold; text-align: center; margin-bottom: 0; }
     .subtitle { color: #8FBF9F; text-align: center; font-size: 1.15rem; margin-top: 0; }
     .stButton>button { background-color: #6B4E7E; color: white; font-size: 1.1rem; }
@@ -105,7 +105,7 @@ st.markdown(f"""
 st.info(f"**Señales de sueño para tu bebé ({edad}):** {info['cues']}")
 st.caption("💡 Recuerda: siempre observa las señales de TU bebé. Esto es una guía aproximada ±30 min.")
 
-# Función PDF 100% corregida
+# Función PDF (sin emojis, 100% compatible)
 def create_pdf():
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.add_page()
