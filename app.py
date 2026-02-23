@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime, timedelta
-from fpdf import FPDF
+from fpdf2 import FPDF
 import pandas as pd
 
 # Configuración de página
@@ -114,8 +114,8 @@ def create_pdf():
     pdf.set_auto_page_break(auto=True, margin=15)
     
     pdf.set_font("Arial", "B", 18)
-    pdf.set_text_color(107, 78, 126)
-    pdf.cell(0, 12, "🌙 Calculadora Instantánea del Sueño de tu Bebé", ln=1, align="C")
+    pdf.set_text_color(107, 78, 126)  # lavanda
+    pdf.cell(0, 12, "Calculadora Instantanea del Sueno de tu Bebe", ln=1, align="C")
     pdf.ln(8)
     
     pdf.set_font("Arial", "B", 12)
@@ -124,14 +124,18 @@ def create_pdf():
     
     pdf.set_font("Arial", "", 11)
     for row in schedule:
-        pdf.cell(0, 8, f"{row['Actividad']}: {row['Hora']}   ({row['Rango']})", ln=1)
+        # Limpiamos emojis para que nunca falle
+        act = row['Actividad'].replace("☀️", "").replace("😴", "").replace("🌙", "").strip()
+        if act == "": 
+            act = "Hora de dormir sugerida"
+        pdf.cell(0, 8, f"{act}: {row['Hora']}   ({row['Rango']})", ln=1)
     
     pdf.ln(10)
     pdf.set_font("Arial", "B", 12)
     pdf.cell(0, 8, f"Total sueño estimado: {total_24h} horas", ln=1)
     pdf.ln(5)
     pdf.set_font("Arial", "", 10)
-    pdf.multi_cell(0, 6, "Recuerda: cada bebé es único. Usa siempre sus señales de sueño. ¡Dulces sueños! 💜")
+    pdf.multi_cell(0, 6, "Recuerda: cada bebé es único. Usa siempre sus señales de sueño. ¡Dulces sueños!")
     
     return pdf.output(dest="S").encode("latin-1")
 
