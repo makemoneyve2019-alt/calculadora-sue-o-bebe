@@ -14,7 +14,7 @@ st.set_page_config(
 # Estilos calmantes
 st.markdown("""
 <style>
-    .stApp { background-color: #F8F1E9; }
+    .stApp { background-color: #2C3E50; }
     .title { color: #6B4E7E; font-size: 2.3rem; font-weight: bold; text-align: center; margin-bottom: 0; }
     .subtitle { color: #8FBF9F; text-align: center; font-size: 1.15rem; margin-top: 0; }
     .stButton>button { background-color: #6B4E7E; color: white; font-size: 1.1rem; }
