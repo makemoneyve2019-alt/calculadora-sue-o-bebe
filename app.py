@@ -7,7 +7,7 @@ st.set_page_config(page_title="Calculadora Sueño Bebé", page_icon="🌙", layo
 
 st.markdown("""
 <style>
-    .stApp { background-color: #F8F1E9; }
+    .stApp { background-color: #0066ff; }
     .title { color: #0066FF; font-size: 2.3rem; font-weight: bold; text-align: center; }
     .subtitle { color: #8FBF9F; text-align: center; font-size: 1.15rem; }
     .sids-alert { background-color: #FFEBEE; padding: 18px; border-radius: 12px; border-left: 6px solid #FF4D6B; margin: 15px 0; }
